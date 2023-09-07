@@ -1,4 +1,4 @@
-# Introducing D2QL: Discrete Diffusion Q-Learning Honours Thesis
+# Honours Thesis: Discrete Diffusion Q-Learning (D2QL)
 
 **Author:** Damien Hood  
 **Supervisor:** Junfeng Wen  
