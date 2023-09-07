@@ -11,6 +11,7 @@ Carleton University
     - [Background](#background)
     - [Scope](#scope)
   - [Objectives](#objectives)
+  - [Repository Folder Structure](#repository-folder-structure)
   - [Setup](#setup)
   - [Usage](#usage)
   - [License](#license)
