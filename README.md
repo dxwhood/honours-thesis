@@ -41,13 +41,13 @@ This thesis aims to fill this gap by developing a variant of Diffusion-QL algori
   - Includes source code, experiments, and utility scripts.
   
 - **`literature-review/`**: 
-  - Houses papers, summaries, and any related work that informs the research.
+  - Contains papers, summaries, and any related work that informs the research.
 
 - **`baseline-algorithms/`**: 
   - Stores implementations of baseline algorithms for comparative analysis.
 
 - **`environments/`**: 
-  - Contains custom or modified reinforcement learning environments used in the research.
+  - Contains custom and/or modified reinforcement learning environments used in the research.
 
 - **`data/`**: 
   - A place for experimental data, both raw and processed.
@@ -60,7 +60,7 @@ This thesis aims to fill this gap by developing a variant of Diffusion-QL algori
   - Includes details about the code and drafts of the written thesis.
 
 - **`presentation/`**: 
-  - Stores slides, scripts, or any related materials for presentations or defenses related to the thesis.
+  - Stores slides, scripts, or any related materials for presentations of the thesis.
 
 - **`assets/`**: 
   - For any images, diagrams, or non-code assets referenced in documentation or thesis.
