@@ -4,6 +4,7 @@
 **Supervisor:** Junfeng Wen  
 Carleton University  
 
+
 ## Table of Contents
 - [Introducing D2QL: Discrete Diffusion Q-Learning](#introducing-d2ql-discrete-diffusion-q-learning)
   - [Table of Contents](#table-of-contents)
