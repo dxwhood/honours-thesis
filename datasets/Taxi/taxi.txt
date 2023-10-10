@@ -1,0 +1,39 @@
+Taxi Benchmark Dataset
+
+Overview:
+    The Taxi benchmark dataset is tailored for the evaluation of offline RL algorithms within the Taxi environment from OpenAI Gym. It encompasses different subsets, each indicative of distinct agent behaviors.
+
+Dataset Details:
+    Source Environment: Taxi from OpenAI Gym
+    State Space: Discrete (500 states representing combinations of taxi, passenger, and destination positions)
+    Action Space: Discrete (6 actions: North, South, East, West, Pickup, Dropoff)
+
+Subsets:
+    Taxi-Random:
+        Size: 1,500 trajectories
+        Description: Captures random exploratory actions, providing a foundational baseline.
+    
+    Taxi-Medium:
+        Size: 3,500 trajectories
+        Description: Illustrates semi-optimal behavior, useful for gauging algorithm capabilities.
+    
+    Taxi-Expert:
+        Size: 5,000 trajectories
+        Description: Depicts near-optimal actions, setting the performance gold standard.
+    
+    Taxi-Mixed:
+        Size: 10,000 trajectories
+        Description: Merges behaviors from random to expert, challenging algorithms to learn from diverse data.
+
+Applications:
+    The Taxi benchmark dataset is designed to:
+        Benchmark offline RL algorithms against varied data qualities.
+        Establish performance metrics ranging from beginner to expert levels.
+        Examine algorithmic adaptability across mixed data scenarios.
+    Usage:
+        Format: Each trajectory in the dataset is a sequence of tuples, where each tuple contains: (state,      action, reward, next_state, done).
+        Dependencies: Ensure you have OpenAI Gym installed to replicate or visualize the environment.
+        Loading Data: Depending on the saved format, use appropriate libraries (like numpy or pickle) to load the dataset into your workspace.
+
+License:
+    This dataset is shared under MIT License. 

@@ -1,0 +1,36 @@
+FrozenLake Benchmark Dataset
+
+Overview:
+    The FrozenLake benchmark dataset offers a robust platform for offline RL algorithm assessment within the FrozenLake environment from OpenAI Gym. Diverse dataset subsets represent varied agent behaviors across the slippery ice and holes.
+
+Dataset Details:
+    Source Environment: FrozenLake from OpenAI Gym
+    State Space: Discrete (representing the agent's position on the grid, size varies with the grid dimension e.g., 4x4 or 8x8)
+    Action Space: Discrete (4 actions: Left, Down, Right, Up)
+
+Subsets:
+    FrozenLake-Random
+        Size: 1,500 trajectories
+        Description: Demonstrates random exploratory actions, suitable as an elementary baseline.
+    FrozenLake-Medium
+        Size: 3,500 trajectories
+        Description: Reflects semi-optimal decision-making, serving as an intermediate evaluation standard.
+    FrozenLake-Expert
+        Size: 5,000 trajectories
+        Description: Embodies near-perfect navigation, setting a challenging performance pinnacle.
+    FrozenLake-Mixed
+        Size: 10,000 trajectories
+        Description: Integrates behaviors, ranging from random navigation to adept traversals, offering a comprehensive testbed for algorithm versatility.
+
+Applications:
+    The FrozenLake benchmark dataset is primed to:
+        -Benchmark offline RL algorithms against varied data qualities.
+        -Establish performance metrics ranging from beginner to expert levels.
+        -Examine algorithmic adaptability across mixed data scenarios.
+    Usage:
+        Format: Every trajectory in the dataset is a sequence of tuples, where each tuple encompasses: (state, action, reward, next_state, done).
+        Dependencies: OpenAI Gym is a requisite to simulate or visualize the environment.
+        Loading Data: Depending on the stored format, appropriate tools (like numpy or pickle) should be employed to load the dataset.
+
+License:
+    This dataset is distributed under the MIT License

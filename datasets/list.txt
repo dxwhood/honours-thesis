@@ -1,0 +1,66 @@
+Current picks: 
+    Gridworld:
+        Beginner: Taxi
+        Intermediate: FrozenLake (8x8)
+        Advanced: Sokoban
+
+    Atari:
+        Beginner: Pong
+        Intermediate: Breakout or MinAtar
+        Advanced: Ms. Pac-Man
+
+    Text-Based:
+        Beginner: TextToy
+        Advanced: CoinCollector
+
+    Game:
+        Beginner: TicTacToe
+        Intermediate: ConnectFour
+        Advanced: Blackjack
+
+    Discretized Classic Control?:
+        Beginner: CartPole
+        Intermediate: MountainCar
+        Advanced: Acrobot
+
+
+1. Beginner Environments:
+    OpenAI Gym's Toy Text:
+        NChain: A linear sequence of states. Why? Teaches basic decision-making; good for verifying foundational RL concepts and testing exploration vs exploitation.
+        GuessingGame: Agent tries to guess a hidden number. Why? Tests continuous adaptation based on feedback, suitable for basic sequential decision-making.
+        HotterColder: Feedback about guess proximity to target. Why? A benchmark for incremental learning, testing adaptability.
+        Roulette: Simplified casino roulette. Why? Introduces probabilistic outcomes; tests algorithms in environments with randomness.
+    Simple Gridworlds: Agents navigate grids, avoiding obstacles. Why? Foundational for verifying spatial navigation and obstacle avoidance.
+        OpenAI Gym's Classic Control:
+        CartPole: Keep a pole balanced on a moving cart. Why? A foundational control task, verifying time-dependent actions.
+        Taxi: Navigate to pick up and drop passengers. Why? Merges spatial reasoning with task objectives, validating basic logic.
+        Chain or NChain: Navigate a linear sequence of states. Why? Tests exploration due to its reward structure.
+    Connect Four: Board game with a goal of four discs in a line. Why? Ensures algorithms can handle deterministic environments with clear states.
+
+2. Intermediate Environments:
+    OpenAI Gym's Classic Control:
+        MountainCar: Control a car to reach a mountaintop. Why? Classic exploration challenge, tests perseverance.
+        Acrobot: Swing a pendulum to achieve height. Why? Introduces underactuated control, balancing rewards over time.
+    Windy Gridworld: Navigate with columns pushing the agent. Why? Tests adaptability to changing transitions and exploration.
+    Cliff Walking: Navigate close to a cliff edge. Why? Validates safe exploration strategies.
+    Atari 2600 games:
+        Pong, Breakout, Freeway: Visual games with basic dynamics. Why? Entry point to visual environments, testing raw pixel data.
+    Sokoban (simpler levels): Push boxes to target locations. Why? Introduces task-based reasoning and spatial planning.
+    Blackjack: Aim for a hand value closest to 21. Why? Challenges hidden information handling and probabilistic outcomes.
+    T-maze: A bifurcated maze. Why? Tests memory and pathfinding with reward sparsity.
+    CoinCollector: Text-based game to collect coins. Why? Entry into text-based environments, challenging parsing and action decisions.
+
+3. Advanced Environments:
+    DeepMind Lab (simpler tasks): Navigate 3D worlds. Why? Validates 3D visual domain handling and navigation.
+    Atari 2600 games:
+        Ms. Pac-Man, Asteroids, Q*bert: Intricate game dynamics. Why? Suitable for advanced navigation, dodging, and objectives.
+        ViZDoom (basic scenarios): First-person shooter perspective in 3D worlds. Why? Entry into immersive 3D settings.
+        NetHack Challenge: Roguelike game with diverse challenges. Why? Expansive testbed for long-term planning and adaptation.
+    MiniWorld: Simplified 3D indoor tasks. Why? Intermediate 3D reasoning without overwhelming complexity.
+    Sokoban (complex levels): Intricate puzzles. Why? Introduces hierarchical reasoning and deep planning.
+
+4. Expert Environments:
+    Atari 2600 games:
+        Montezuma's Revenge: Navigate a pyramid with traps. Why? Notorious exploration challenge and a litmus test for exploration strategies.
+    AI2-THOR or MineRL: Open-world simulations with complex interactions. Why? Ultimate test on open-world reasoning and multi-objective tasks.
+    TextWorld: Navigate text-based worlds. Why? Gauges complex text parsing, understanding, and command generation.
