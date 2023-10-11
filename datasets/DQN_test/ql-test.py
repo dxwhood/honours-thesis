@@ -2,24 +2,6 @@ import numpy as np
 import gymnasium as gym
 import pandas as pd
 
-#check if user is training or just rendering on local machine
-user_input = input("Are you training the agent? (y/n): ")
-if user_input == "n":
-    # load the model and render for 5 episodes
-    q_table = np.load('taxi_q_table.npy')
-    env = gym.make('Taxi-v3', render_mode='human')
-    
-    for episode in range(1, 6):  # Running 5 episodes as an example
-        state = env.reset()[0]
-        terminated = False
-        truncated = False
-
-        while not (terminated or truncated):
-            action = np.argmax(q_table[state, :])
-            next_state, reward, terminated, truncated, info = env.step(action)
-            state = next_state
-    exit()
-
 
 
 def q_learning(env, num_episodes=50000, learning_rate=0.85, discount_factor=0.95, exploration_prob=1.0, exploration_decay=0.995, min_exploration=0.05):
