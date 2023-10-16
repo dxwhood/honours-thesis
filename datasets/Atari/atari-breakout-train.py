@@ -2,7 +2,7 @@ from stable_baselines3 import PPO
 import gymnasium as gym  # Using gymnasium instead of gym
 from stable_baselines3.common.callbacks import CheckpointCallback
 
-print("STARTING 10K BREAKOUT TRAINING ON PONG")
+print("STARTING 4M BREAKOUT TRAINING ON PONG")
 
 # Initialize the environment
 env = gym.make('ALE/Breakout-v5')
@@ -24,7 +24,7 @@ checkpoint_callback = CheckpointCallback(save_freq=save_freq, save_path='./model
 
 
 # Train the model
-model.learn(total_timesteps=10000)
+model.learn(total_timesteps=4000000)
 
 # Save the model
-model.save("ppo_breakout_10K")
+model.save("ppo_breakout_4M")
