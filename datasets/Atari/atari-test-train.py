@@ -1,6 +1,7 @@
 from stable_baselines3 import PPO
 import gymnasium as gym  # Using gymnasium instead of gym
 
+print("STARTING 500K PPO TRAINING ON PONG")
 
 # Initialize the environment
 env = gym.make('ALE/Pong-v5')
@@ -17,7 +18,7 @@ model = PPO(
 )
 
 # Train the model
-model.learn(total_timesteps=100000)
+model.learn(total_timesteps=500000)
 
 # Save the model
-model.save("ppo_pong")
+model.save("ppo_pong_500K")
