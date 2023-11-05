@@ -1,4 +1,4 @@
-import gym
+import gymnasium as gym  
 import pandas as pd
 
 def collect_random_data(env_name, num_trajectories=1500):
@@ -6,23 +6,27 @@ def collect_random_data(env_name, num_trajectories=1500):
     dataset = []
 
     for _ in range(num_trajectories):
-        state = env.reset()
-        
-        while True:
-            action = env.action_space.sample()  # random policy
-            next_state, reward, done, _ = env.step(action)
-            dataset.append([state, action, reward, next_state, done])
-            state = next_state
+        state = env.reset()[0]
+        terminated = False
+        truncated = False
 
-            if done:
+        while True:  
+            action = env.action_space.sample()  # Random policy
+            next_state, reward, terminated, truncated, _ = env.step(action)
+
+            dataset.append([state, action, reward, next_state, terminated, truncated])  
+            
+            if terminated or truncated:  
                 break
+
+            state = next_state
 
     env.close()
     return dataset
 
-# Collect random trajectories
+# collect random trajectories
 taxi_random_data = collect_random_data('Taxi-v3')
 
-# Convert to DataFrame and save as CSV
-df = pd.DataFrame(taxi_random_data, columns=['state', 'action', 'reward', 'next_state', 'done'])
-df.to_csv('taxi_random_dataset.csv', index=False)
+# save as csv
+df = pd.DataFrame(taxi_random_data, columns=['state', 'action', 'reward', 'next_state', 'terminated', 'truncated'])
+df.to_csv('taxi_random_dataset_fixed.csv', index=False)
