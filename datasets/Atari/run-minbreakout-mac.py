@@ -1,7 +1,7 @@
 import gymnasium as gym
 from stable_baselines3 import PPO
 
-name = "PPO_minatar_Breakout-v1_10M"
+name = "ppo_minbreakout_100k"
 
 
 # Create the environment
