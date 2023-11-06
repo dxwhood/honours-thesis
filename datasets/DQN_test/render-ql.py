@@ -16,4 +16,7 @@ for episode in range(5):
         next_state, reward, terminated, truncated, info = env.step(action)
         state = next_state
         env.render()
-        
+
+print('Done')
+
+
