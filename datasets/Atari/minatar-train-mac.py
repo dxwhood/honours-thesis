@@ -16,9 +16,9 @@ print(name)
 # Initialize the environment
 env = gym.make('MinAtar/Breakout-v1')
 
-env = TransformObservation(env, lambda obs: obs.astype(np.uint8))
-env = TransformObservation(env, lambda obs: obs * 255.0)
-env = DummyVecEnv([lambda: env])
+# env = TransformObservation(env, lambda obs: obs.astype(np.uint8))
+# env = TransformObservation(env, lambda obs: obs * 255.0)
+# env = DummyVecEnv([lambda: env])
 
 # Define hyperparameters
 model = PPO(

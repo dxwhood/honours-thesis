@@ -1,7 +1,7 @@
 import gymnasium as gym
 from stable_baselines3 import PPO
 
-name = "ppo_minbreakout_100k"
+name = "PPO_minatar_Breakout-v1_100M"
 
 
 # Create the environment
@@ -41,6 +41,6 @@ else:
     print("Model not loaded, cannot display game state.")
 
 # Close the environment properly
-print("Made it :)")
+print("DEBUG: Closing Environment")
 env.close()
 
