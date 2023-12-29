@@ -16,9 +16,6 @@ print(name)
 # Initialize the environment
 env = gym.make('MinAtar/Breakout-v1')
 
-# env = TransformObservation(env, lambda obs: obs.astype(np.uint8))
-# env = TransformObservation(env, lambda obs: obs * 255.0)
-# env = DummyVecEnv([lambda: env])
 
 # Define hyperparameters
 model = PPO(
@@ -39,7 +36,7 @@ checkpoint_callback = CheckpointCallback(
 )
 
 # Train the model
-model.learn(total_timesteps=int(1e5), callback=checkpoint_callback)
+model.learn(total_timesteps=int(2e6), callback=checkpoint_callback)
 
 model.save(name)
 
