@@ -1,3 +1,0 @@
-ppo_pong_500K.zip filter=lfs diff=lfs merge=lfs -text
-ppo_breakout_10K.zip filter=lfs diff=lfs merge=lfs -text
-ppo_breakout_4M.zip filter=lfs diff=lfs merge=lfs -text

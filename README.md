@@ -1,11 +1,13 @@
 # Honours Thesis: Discrete Diffusion Q-Learning (D2QL)
 
-**Author:** Damien Hood  
-**Supervisor:** Junfeng Wen  
-Carleton University  
+**Author:** Damien Hood
+**Supervisor:** Junfeng Wen
 
+
+Carleton University
 
 ## Table of Contents
+
 - [Introducing D2QL: Discrete Diffusion Q-Learning](#introducing-d2ql-discrete-diffusion-q-learning)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
@@ -22,11 +24,13 @@ Carleton University
 ## Introduction
 
 ### Background
+
 Reinforcement Learning (RL) and Generative Models are two seminal fields in Artificial Intelligence (AI). RL focuses on agent-environment interactions to maximize a given reward, whereas Generative Models, especially diffusion models, can generate new data resembling the training data. The intersection  of these two fields is ripe for exploration. Specifically, while the Diffusion-QL algorithm exists for RL in continuous action spaces, no known models efficiently adapt it for discrete action spaces to the best of our knowledge.
 
 **Note:** This work is conducted as part of an Honours Thesis at Carleton University.
 
 ### Scope
+
 This thesis aims to fill this gap by developing a variant of Diffusion-QL algorithm for discrete action spaces, termed Discrete Diffusion Q-Learning (D2QL). We evaluate its performance against traditional RL algorithms in various discrete environments.
 
 ## Objectives
@@ -37,38 +41,32 @@ This thesis aims to fill this gap by developing a variant of Diffusion-QL algori
 
 ## Repository Folder Structure
 
-- **`d2ql/`**: 
+- **`d2ql/`**:
+
   - Contains all materials related to the Discrete Diffusion Q Learning algorithm.
   - Includes source code, experiments, and utility scripts.
-  
-- **`literature-review/`**: 
+- **`literature-review/`**:
+
   - Contains papers, summaries, and any related work that informs the research.
+- **`baseline-algorithms/`**:
 
-- **`baseline-algorithms/`**: 
   - Stores implementations of baseline algorithms for comparative analysis.
+- **`environments/`**:
 
-- **`environments/`**: 
   - Contains custom and/or modified reinforcement learning environments used in the research.
+- **`data/`**:
 
-- **`data/`**: 
   - A place for experimental data, both raw and processed.
+- **`results/`**:
 
-- **`results/`**: 
   - Holds generated results, figures, and tables from experiments.
+- **`documentation/`**:
 
-- **`documentation/`**: 
   - Comprehensive documentation directory.
   - Includes details about the code and drafts of the written thesis.
+- **`misc/`**:
 
-- **`presentation/`**: 
-  - Stores slides, scripts, or any related materials for presentations of the thesis.
-
-- **`assets/`**: 
-  - For any images, diagrams, or non-code assets referenced in documentation or thesis.
-
-- **`misc/`**: 
   - A catch-all folder for supplementary materials.
-  - Contains meeting notes, research plans, and more.
 
 ## Setup
 
