@@ -135,37 +135,41 @@ def t_onehot(x, n):
 
     return one_hot
 
-def cosine_beta_schedule(T, s=0.1):
-    """
-    Generate a cosine beta schedule for T timesteps.
+# def cosine_beta_schedule(T, s=0.1):
+#     """
+#     Generate a cosine beta schedule for T timesteps.
 
-    Args:
-    - T (int): The number of timesteps in the diffusion process.
-    - s (float): A hyperparameter controlling the sharpness of the cosine curve. Typical values are between 0.001 and 0.1.
+#     Args:
+#     - T (int): The number of timesteps in the diffusion process.
+#     - s (float): A hyperparameter controlling the sharpness of the cosine curve. Typical values are between 0.001 and 0.1.
 
-    Returns:
-    - betas (torch.Tensor): A tensor of beta values for the diffusion schedule.
-    """
-    # Define the steps
-    steps = torch.arange(0, T, dtype=torch.float32) / T
+#     Returns:
+#     - betas (torch.Tensor): A tensor of beta values for the diffusion schedule.
+#     """
+#     # Define the steps
+#     steps = torch.arange(0, T, dtype=torch.float32) / T
 
-    # Calculate the alphas using the cosine schedule
-    alphas = torch.cos(((steps + s) / (1 + s)) * np.pi * 0.5) ** 2
-    alphas = alphas / alphas[0]
+#     # Calculate the alphas using the cosine schedule
+#     alphas = torch.cos(((steps + s) / (1 + s)) * np.pi * 0.5) ** 2
+#     alphas = alphas / alphas[0]
 
-    # Calculate beta values from alphas
-    betas = 1 - alphas[1:] / alphas[:-1]
+#     # Calculate beta values from alphas
+#     betas = 1 - alphas[1:] / alphas[:-1]
     
-    # Ensure that beta values are within a valid range
-    betas = torch.clip(betas, 0.0001, 0.9999)
+#     # Ensure that beta values are within a valid range
+#     betas = torch.clip(betas, 0.0001, 0.9999)
 
-    if len(betas) < T:
-        last_beta = betas[-1]
-        betas = torch.cat([betas, last_beta.unsqueeze(0)])
+#     if len(betas) < T:
+#         last_beta = betas[-1]
+#         betas = torch.cat([betas, last_beta.unsqueeze(0)])
 
-    #print("BETA SCHEDULE: ", betas)
+#     return betas
 
-    return betas
+def linear_beta_schedule(timesteps, beta_start=1e-4, beta_end=2e-2, dtype=torch.float32):
+    betas = np.linspace(
+        beta_start, beta_end, timesteps
+    )
+    return torch.tensor(betas, dtype=dtype)
 
 def compute_alpha_bar(beta_schedule):
     alpha = 1. - beta_schedule
@@ -188,23 +192,96 @@ def t_apply_noise(x, timesteps, beta_schedule):
     alpha, alpha_bar = compute_alpha_bar(beta_schedule)
 
     # Extract alpha_bar values for each timestep in the batch
+    timesteps = timesteps.to(alpha_bar.device)
     alpha_bar_t = alpha_bar[timesteps]
+    alpha_bar_t = alpha_bar_t.to(x.device)
+
 
     # Add noise to each action in the batch
     epsilon = torch.randn_like(x)
-    xt = torch.sqrt(alpha_bar_t) * x + torch.sqrt(1. - alpha_bar_t) * epsilon
+
+
+    if False:
+        print()
+        print("$"*50)
+        print("In t_apply_noise: ")
+        #print("x: ", x)
+        print("x size: ", x.size())
+        print("x shape: ", x.shape)
+        #print("timesteps: ", timesteps)
+        print("timesteps size: ", timesteps.size())
+        print("timesteps shape: ", timesteps.shape)
+        #print("beta_schedule: ", beta_schedule)
+        print("beta_schedule size: ", beta_schedule.size())
+        print("beta_schedule shape: ", beta_schedule.shape)
+        #print("alpha: ", alpha)
+        print("alpha size: ", alpha.size())
+        print("alpha shape: ", alpha.shape)
+        #print("alpha_bar: ", alpha_bar)
+        print("alpha_bar size: ", alpha_bar.size())
+        print("alpha_bar shape: ", alpha_bar.shape)
+        #print("alpha_bar_t: ", alpha_bar_t)
+        print("alpha_bar_t size: ", alpha_bar_t.size())
+        print("alpha_bar_t shape: ", alpha_bar_t.shape)
+        #print("epsilon: ", epsilon)
+        print("epsilon size: ", epsilon.size())
+        print("epsilon shape: ", epsilon.shape)
+        print("$"*50)
+        print()
+
+    
+
+    xt = torch.sqrt(alpha_bar_t.unsqueeze(1)) * x + torch.sqrt(1. - alpha_bar_t.unsqueeze(1)) * epsilon
 
     return xt
 
     
-# def reverse_diffusion(x_noisy, timesteps, model, states, beta_schedule):
+# def reverse_diffusion(x_noisy, timesteps, model, state, beta_schedule):
 #     alpha, alpha_bar = compute_alpha_bar(beta_schedule)
 #     # Extract alpha_bar values for each timestep in the batch
 #     alpha_bar_t = alpha_bar[timesteps]
 #     # Generate model output for the batch
-#     model_output = model(x_noisy, timesteps, states)
+#     model_output = model(x_noisy, timesteps, state).to(x_noisy.device)
+
+#     alpha_bar_t = alpha_bar_t.to(x_noisy.device)
+#     model_output = model_output.to(x_noisy.device)
+
+
 #     x_denoised = (x_noisy - torch.sqrt(1. - alpha_bar_t) * model_output) / torch.sqrt(alpha_bar_t)
 #     return x_denoised
+
+def reverse_diffusion(x_noisy, timestep, model, state, beta_schedule):
+    """
+    Performs a single reverse diffusion step.
+
+    Args:
+    - x_noisy (torch.Tensor): The current noisy version of the action data.
+    - timestep (int): The current timestep in the reverse diffusion process.
+    - model (nn.Module): The neural network model used for denoising.
+    - state (torch.Tensor): The current state of the environment.
+    - beta_schedule (torch.Tensor): The beta schedule tensor.
+
+    Returns:
+    - torch.Tensor: The denoised version of the action data after the reverse diffusion step.
+    """
+
+    
+    alpha, alpha_bar = compute_alpha_bar(beta_schedule)
+
+    # Convert timestep to a tensor
+    timestep_tensor = torch.tensor([timestep], dtype=torch.float32, device=model.device)
+
+    # Generate model output
+    model_output = model(x_noisy, timestep_tensor, state)
+
+    # everything on same device
+    x_noisy = x_noisy.to(model.device)
+    alpha_bar = alpha_bar.to(model.device)
+    model_output = model_output.to(model.device)
+    
+
+    x_denoised = (x_noisy - torch.sqrt(1. - alpha_bar[timestep]) * model_output) / torch.sqrt(alpha_bar[timestep])
+    return x_denoised
 
 
 def t_reverse_diffusion(x_noisy, timesteps, model, states, beta_schedule):
@@ -226,15 +303,61 @@ def t_reverse_diffusion(x_noisy, timesteps, model, states, beta_schedule):
     alpha, alpha_bar = compute_alpha_bar(beta_schedule)
     # Ensure timesteps tensor is on the same device as alpha_bar
     alpha_bar = alpha_bar.to(model.device)
-    timesteps = timesteps.to(alpha_bar.device)
+
+    #if timesteps not int (python int not dtype), to alphabar device
+    if type(timesteps) == torch.Tensor:
+        timesteps = timesteps.to(alpha_bar.device)
+    
 
     # Extract alpha_bar values for each timestep in the batch
     alpha_bar_t = alpha_bar[timesteps]
 
     # Generate model output for the batch
+    #make sure all is on the same device
+    x_noisy = x_noisy.to(model.device)
+    states = states.to(model.device)
+    
+
     model_output = model(x_noisy, timesteps, states)
 
-    x_denoised = (x_noisy - torch.sqrt(1. - alpha_bar_t) * model_output) / torch.sqrt(alpha_bar_t)
+    if False:
+        print()
+        print("&"*50)
+        print("In t_reverse_diffusion: ")
+        #print("x_noisy: ", x_noisy)
+        print("x_noisy size: ", x_noisy.size())
+        print("x_noisy shape: ", x_noisy.shape)
+        #print("timesteps: ", timesteps)
+        print("timesteps size: ", timesteps.size())
+        print("timesteps shape: ", timesteps.shape)
+        #print("model: ", model)
+        #print("model size: ", model.size())
+        #print("model shape: ", model.shape)
+        #print("states: ", states)
+        print("states size: ", states.size())
+        print("states shape: ", states.shape)
+        #print("beta_schedule: ", beta_schedule)
+        print("beta_schedule size: ", beta_schedule.size())
+        print("beta_schedule shape: ", beta_schedule.shape)
+        #print("alpha: ", alpha)
+        print("alpha size: ", alpha.size())
+        print("alpha shape: ", alpha.shape)
+        #print("alpha_bar: ", alpha_bar)
+        print("alpha_bar size: ", alpha_bar.size())
+        print("alpha_bar shape: ", alpha_bar.shape)
+        #print("alpha_bar_t: ", alpha_bar_t)
+        print("alpha_bar_t size: ", alpha_bar_t.size())
+        print("alpha_bar_t shape: ", alpha_bar_t.shape)
+        print("model_output: ", model_output)
+        print("model_output size: ", model_output.size())
+        print("model_output shape: ", model_output.shape)
+        print("&"*50)
+        print()
+
+
+    #x_denoised = (x_noisy - torch.sqrt(1. - alpha_bar_t) * model_output) / torch.sqrt(alpha_bar_t)
+    x_denoised = (x_noisy - torch.sqrt(1. - alpha_bar_t.unsqueeze(-1)) * model_output) / torch.sqrt(alpha_bar_t.unsqueeze(-1))
+
     return x_denoised
 
 
